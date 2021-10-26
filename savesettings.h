@@ -86,6 +86,8 @@ public:
     void setTempMax(int index,double value);
     void setHumiMin(int index,double value);
     void setHumiMax(int index,double value);
+    void setTempCalib(int index,double value);
+    void setHumiCalib(int index,double value);
 
     void setActive(int index,bool active);
     void setActiveAll(bool active);

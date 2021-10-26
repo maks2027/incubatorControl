@@ -104,12 +104,11 @@ void DeviceCom::readReady()//MODBUS SHT30/31
     }
     else if (reply->error() == QModbusDevice::ProtocolError)
     {
-
+        //qDebug()<<"ProtocolError";
     }
     else
     {
-        // Выводим сообщение об остальных типах ошибки используя объект reply->errorString();
-        // В принципе, можно убрать столь подробное деление обработчика ошибок, оставив только лишь этот блок.
+      // qDebug()<<"Error";
     }
 
     reply->deleteLater();
@@ -256,7 +255,7 @@ void DeviceCom::prepareRead(int adr)//MODBUS SHT30/31
 {
     if(!modbusDevice) return;
 
-    //qDebug()<<"send to " << adr;
+    qDebug()<<"send to " << adr;
 
     if(auto *lastRequest = modbusDevice->sendReadRequest(QModbusDataUnit(QModbusDataUnit::InputRegisters, 0, 2), adr))
     {

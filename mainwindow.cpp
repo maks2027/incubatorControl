@@ -15,7 +15,7 @@ MainWindow::MainWindow(SaveSettings &AllSettings,QWidget *parent)
 
     about = new QMessageBox(this);
     about->setWindowTitle("О программе");
-    about->setText(QString("Инкубатор v2 0.9.4\nАвтор: Киян Максим Викторович\nQt %0").arg(qVersion()));
+    about->setText(QString("Инкубатор v2 0.9.5\nАвтор: Киян Максим Викторович\nQt %0").arg(qVersion()));
 
 
     connect(&AllSettings, SIGNAL(valueChanged(int)), this, SLOT(updateBox(int)));

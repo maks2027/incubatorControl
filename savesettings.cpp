@@ -1,4 +1,4 @@
- #include "savesettings.h"
+#include "savesettings.h"
 
 SaveSettings::SaveSettings(QObject *parent) : QObject(parent)
 {
@@ -99,7 +99,7 @@ void SaveSettings::writeBuffer()
     QSqlQuery query(db);
 
     for(int i = 0;i < valueBuffer.size();i++)
-    {        
+    {
         query.prepare(QString("INSERT INTO box_%0 (temp, humi, date) VALUES (:val2,:val3,:val4)").arg(valueBuffer[i].boxIndex));
         query.bindValue(":val2", valueBuffer[i].temp);
         query.bindValue(":val3", valueBuffer[i].humi);
@@ -229,6 +229,20 @@ void SaveSettings::setHumiMax(int index, double value)
     boxes[index]->setHumiMax(value);
 }
 
+void SaveSettings::setTempCalib(int index, double value)
+{
+    if(boxes.size()<=index) return;
+
+    boxes[index]->setTempCalib(value);
+}
+
+void SaveSettings::setHumiCalib(int index, double value)
+{
+    if(boxes.size()<=index) return;
+
+    boxes[index]->setHumiCalib(value);
+}
+
 void SaveSettings::setActive(int index, bool active)
 {
     if(boxes.size()<=index) return;
@@ -253,7 +267,7 @@ void SaveSettings::setValue(sensorData s)
             boxes[i]->setHumi(s.value, s.date.toString("yyyy-MM-dd hh:mm:ss"));
             isBox = true;
         }
-    }    
+    }
     if(isBox) return;
 
     for(int i = 0;i < sensors.size(); i++ )
@@ -268,7 +282,7 @@ void SaveSettings::setValue(sensorData s)
     }
 
     sensors.append(s);
-    emit sensorChanged(sensors.size()-1);   
+    emit sensorChanged(sensors.size()-1);
 }
 
 void SaveSettings::setDateTime(int index, QDateTime val)
@@ -341,7 +355,7 @@ void SaveSettings::read()
     soundEnableMinTemp = settings.value("soundEnableMinTemp",true).toBool();
     soundEnableMaxHumi = settings.value("soundEnableMaxHumi",true).toBool();
     soundEnableMinHumi = settings.value("soundEnableMinHumi",true).toBool();
-    soundEnableErr = settings.value("soundEnableErr",true).toBool();   
+    soundEnableErr = settings.value("soundEnableErr",true).toBool();
 
     password = settings.value("password","").toString();
     pathReport = settings.value("pathReport","C:\\Отчёты по температуре").toString();

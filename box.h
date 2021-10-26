@@ -33,13 +33,9 @@ public:
 
     int getAdrSensorHumi() const;
 
-    void setTempAddress(int adr);
+    void setTempAddress(int adr);    
 
-    //void setTempIndex(int ind);
-
-    void setHumiAddress(int adr);
-
-    //void setHumiIndex(int ind);
+    void setHumiAddress(int adr);    
 
     double getTempMax() const;
     void setTempMax(double value);
@@ -76,6 +72,12 @@ public:
 
     bool getEnabledErrorData() const;
     void setEnabledErrorData(bool value);
+
+    double getTempCalib() const;
+    void setTempCalib(double value);
+
+    double getHumiCalib() const;
+    void setHumiCalib(double value);
 
 private:
     int boxIndex = -1;
@@ -123,6 +125,9 @@ private:
     //////////////////////////////////
     double temp = 0.0;
     double humi = 0.0;
+
+    double tempCalib = 0.0;
+    double humiCalib = 0.0;
 
     QTimer *tempTimer = new QTimer(this);
     QTimer *humiTimer = new QTimer(this);

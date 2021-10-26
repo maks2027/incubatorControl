@@ -24,11 +24,12 @@ Settings::Settings(SaveSettings &_AllSettings, QWidget *parent) :
     ui->spinBox_poll->setValue(AllSettings.getTimePool());
 
 
-    ui->tableWidget_boxes->setColumnCount(7);
+    ui->tableWidget_boxes->setColumnCount(9);
     ui->tableWidget_boxes->setShowGrid(true);
     ui->tableWidget_boxes->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget_boxes->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    ui->tableWidget_boxes->setHorizontalHeaderLabels(QStringList() << "Название" << "Температура" << "Влажность"<< "Т. Минимум" << "Т. Максимум" << "В. Минимум" << "В. Максимум");
+    ui->tableWidget_boxes->setHorizontalHeaderLabels(QStringList() << "Название" << "Температура" << "Влажность"<< "Т. Минимум"
+                                                                   << "Т. Максимум" << "В. Минимум" << "В. Максимум" << "T. Калиб." << "В. Калиб.");
 
     ui->tableWidget_sensors->setColumnCount(3);
     ui->tableWidget_sensors->setShowGrid(true);
@@ -137,6 +138,14 @@ void Settings::createTableBox()
         QTableWidgetItem *item6 = new QTableWidgetItem;
         item6->setData(Qt::DisplayRole, AllSettings.getBox(i)->getHumiMax());
         ui->tableWidget_boxes->setItem(i,6, item6);
+
+        QTableWidgetItem *item7 = new QTableWidgetItem;
+        item7->setData(Qt::DisplayRole, AllSettings.getBox(i)->getTempCalib());
+        ui->tableWidget_boxes->setItem(i,7, item7);
+
+        QTableWidgetItem *item8 = new QTableWidgetItem;
+        item8->setData(Qt::DisplayRole, AllSettings.getBox(i)->getHumiCalib());
+        ui->tableWidget_boxes->setItem(i,8, item8);
     }
 
     ui->tableWidget_boxes->blockSignals(false);
@@ -525,6 +534,12 @@ void Settings::on_tableWidget_boxes_itemChanged(QTableWidgetItem *item)
         break;
     case 6:
         AllSettings.setHumiMax(row,item->data(Qt::DisplayRole).toDouble());
+        break;
+    case 7:
+        AllSettings.setTempCalib(row,item->data(Qt::DisplayRole).toDouble());
+        break;
+    case 8:
+        AllSettings.setHumiCalib(row,item->data(Qt::DisplayRole).toDouble());
         break;
     }
 }

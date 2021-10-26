@@ -19,7 +19,7 @@ double Box::getTemp() const
 void Box::setTemp(double value, QString time)
 {
     qDebug()<<"box temp: " << value;
-    temp = value;
+    temp = value + tempCalib;
     isOneInDataTemp = true;
     isTemp = true;
     newTemp = true;
@@ -38,7 +38,7 @@ double Box::getHumi() const
 void Box::setHumi(double value, QString time)
 {
     qDebug()<<"box humi: " << value;
-    humi = value;
+    humi = value + humiCalib;
     isOneInDataHumi = true;
     isHumi = true;
     newHumi = true;
@@ -259,6 +259,30 @@ void Box::setEnabledErrorData(bool value)
     defineError();
 }
 
+double Box::getTempCalib() const
+{
+    return tempCalib;
+}
+
+void Box::setTempCalib(double value)
+{
+    tempCalib = value;
+
+    emit settingChanged(boxIndex);
+}
+
+double Box::getHumiCalib() const
+{
+    return humiCalib;
+}
+
+void Box::setHumiCalib(double value)
+{
+    humiCalib = value;
+
+    emit settingChanged(boxIndex);
+}
+
 void Box::processData()
 {
     if(newHumi && newTemp)
@@ -371,6 +395,8 @@ void Box::save()
     settings.setValue("tempMin", tempMin);
     settings.setValue("humiMax", humiMax);
     settings.setValue("humiMin", humiMin);
+    settings.setValue("tempCalib", tempCalib);
+    settings.setValue("humiCalib", humiCalib);
 
     settings.endGroup();
 }
@@ -391,6 +417,8 @@ void Box::load()
     tempMin = settings.value("tempMin", 37.4).toDouble();
     humiMax = settings.value("humiMax", 60.0).toDouble();
     humiMin = settings.value("humiMin", 50.0).toDouble();
+    tempCalib = settings.value("tempCalib", 0.0).toDouble();
+    humiCalib = settings.value("humiCalib", 0.0).toDouble();
 
     settings.endGroup();
 }
