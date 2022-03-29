@@ -265,7 +265,7 @@ void MainWindow::updateBox(int index)
         {
             boxes[index].temp->setText("err");
 
-            boxes[index].box->setStyleSheet(QString("QFrame#grop%0 {border: 2px solid black;background-color: rgb(130, 130, 130)}").arg(index));
+            boxes[index].box->setStyleSheet(QString("QFrame#grop%0 {border: 2px solid black;background-color: rgb(100, 100, 100)}").arg(index));
             boxes[index].temp->setStyleSheet("color: rgb(70, 70, 70)");
         }
 
@@ -278,22 +278,55 @@ void MainWindow::updateBox(int index)
             strHumi.append(" %");
 
             boxes[index].humi->setText(strHumi);
-
             boxes[index].humi->setStyleSheet("color: rgb(0, 0, 0)");
         }
         else
         {
             boxes[index].humi->setText("err");
-
-            //boxes[index].box->setStyleSheet(QString("QFrame#grop%0 {border: 2px solid black;background-color: rgb(130, 130, 130)}").arg(index));
             boxes[index].humi->setStyleSheet("color: rgb(70, 70, 70)");
         }
 
     }
     else
     {
-        boxes[index].temp->setText("-");
-        boxes[index].humi->setText("-");
+        if(AllSettings.getBox(index)->getAdrSensorTemp() >= 0)
+        {
+            if(AllSettings.getBox(index)->getIsTemp())
+            {
+
+                double tempValue = AllSettings.getBox(index)->getTemp();
+
+                QString strTemp = QString::number(tempValue, 'f', 1);
+                strTemp.append(" °C");
+
+                boxes[index].temp->setText(strTemp);
+            }
+            else
+                boxes[index].temp->setText("err");
+        }
+        else
+        {
+            boxes[index].temp->setText("-");
+        }
+
+        if(AllSettings.getBox(index)->getAdrSensorHumi() >= 0)
+        {
+            if(AllSettings.getBox(index)->getIsHumi())
+            {
+                double humiValue = AllSettings.getBox(index)->getHumi();
+
+                QString strHumi = QString::number(humiValue, 'f', 1);
+                strHumi.append(" %");
+
+                boxes[index].humi->setText(strHumi);
+            }
+            else
+                boxes[index].humi->setText("err");
+        }
+        else
+        {
+            boxes[index].humi->setText("-");
+        }
 
         boxes[index].box->setStyleSheet(QString("QFrame#grop%0 {border: 2px solid black;background-color: rgb(130, 130, 130)}").arg(index));
         boxes[index].temp->setStyleSheet("color: rgb(70, 70, 70)");

@@ -9,6 +9,9 @@ Box::Box(int boxIndex, QObject *parent) : QObject(parent), boxIndex(boxIndex)
     connect(newDataTimer,&QTimer::timeout,this,&Box::sendNewData);
 
     connect(this,&Box::settingChanged,this,&Box::save);
+
+    tempTimer->start(60000);
+    humiTimer->start(60000);
 }
 
 double Box::getTemp() const
@@ -172,13 +175,15 @@ void Box::setEnabled(bool value)
         isTemp = true;
         isHumi = true;
 
-        tempTimer->start(timeoutNoData);
-        humiTimer->start(timeoutNoData);
+         defineError();
+
+        //tempTimer->start(timeoutNoData);
+       // humiTimer->start(timeoutNoData);
     }
     else
     {
-        tempTimer->stop();
-        humiTimer->stop();
+        //tempTimer->stop();
+        //humiTimer->stop();
 
         defineError();
     }
@@ -301,7 +306,6 @@ void Box::defineError()
     if(!enabled)
     {
         sendError(false);
-
         return;
     }
 

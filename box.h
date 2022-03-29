@@ -151,7 +151,6 @@ private slots:
     void save();
 
 signals:
-
     void noTemp(int index);
     void noHumi(int index);
 
@@ -162,7 +161,6 @@ signals:
     void allData(int index);
 
     void settingChanged(int index);
-
 };
 
 #endif // BOX_H
